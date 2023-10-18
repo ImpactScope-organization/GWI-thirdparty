@@ -8,6 +8,7 @@ import { useStepsContext } from "./Context/StateContext";
 import Login from "./Components/Shared/Login";
 import { useEffect } from "react";
 
+
 function App() {
   const {openLoginModal, setOpenLoginModal}  = useStepsContext()
 

@@ -1,58 +1,25 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import BackButton from "../Shared/BackButton";
 import { useStepsContext } from "../../Context/StateContext";
 import { toast } from "react-toastify";
 import {
   useAssignCase,
   useCloseCase,
-  useGetChangeStatusToReview,
-  useUpdateCase,
   useGetSpecificReportDetails,
+  useUpdateCase,
 } from "../../Hooks/reports-hooks";
 import { formattedDate } from "../../utils/date";
 import PriorityColor from "./PriorityColor";
 
 // ----------------------------
-const SpecificReport = () => {
-  const [showCaseStatusStep0, setShowCaseStatusStep0] = useState(true);
-  const [showCaseStatusStep1, setShowCaseStatusStep1] = useState(false);
+const ReviewProgress = () => {
+  const [showCaseStatusStep1, setShowCaseStatusStep1] = useState(true);
   const [showCaseStatusStep2, setShowCaseStatusStep2] = useState(false);
   const [showCaseStatusStep3Update, setShowCaseStatusStep3Update] =
     useState(false);
   const [showCaseStatusStep4Final, setShowCaseStatusStep4Final] =
     useState(false);
   const { setStep, company, specificReportDetailsID } = useStepsContext();
-
-  // useGetChangeStatusToReview;
-  const {
-    mutate: addMutateChangeStatusToReview,
-    isLoading: changeStatusLoading,
-  } = useGetChangeStatusToReview(
-    JSON.stringify({
-      company,
-      reviewing: "true",
-      sentToRegulators: "false",
-      reviewed: "false",
-      caseOpenedTimeStamp: formattedDate,
-    })
-  );
-
-  const handleChangeStatusCase = async () => {
-    addMutateChangeStatusToReview(
-      {},
-      {
-        onSuccess: (response) => {
-          if (response?.data?.message) {
-            toast.error(response?.data?.message);
-          }
-          if (response?.data?.results) {
-            setShowCaseStatusStep0(false);
-            setShowCaseStatusStep1(true);
-          }
-        },
-      }
-    );
-  };
 
   // AssignCase
   const [reportAssignCaseData, setReportAssignCaseData] = useState({
@@ -148,7 +115,7 @@ const SpecificReport = () => {
         company,
         reviewed: "true",
         reviewing: "false",
-        sentToRegulators: "false",
+        pending: "false",
       })
       // currentCountry
     );
@@ -171,11 +138,12 @@ const SpecificReport = () => {
     );
   };
 
-  // getSingleReportDetail;
   const {
     data: specificReportDetailsData,
     isLoading: specificReportDetailsLoading,
   } = useGetSpecificReportDetails(specificReportDetailsID);
+
+  console.log("specificReportDetailsData: ", specificReportDetailsData);
 
   // const allClaim = JSON.parse(specificReportDetailsData?.results?.claims);
   const allClaim = specificReportDetailsData?.results?.claims
@@ -206,10 +174,6 @@ const SpecificReport = () => {
                 : specificReportDetailsData?.results?.sendToRegulatorsTimeStamp}
             </p>
 
-            {showCaseStatusStep0 && (
-              <img src="./assets/pending__to__review.png" alt="logo" />
-            )}
-
             {showCaseStatusStep4Final && (
               <img src="./assets/Review__Completed.png" alt="logo" />
             )}
@@ -236,7 +200,7 @@ const SpecificReport = () => {
           </p>
 
           <p className="text-[#6C7275] text-base font-semibold mb-1">
-            Data sources:
+            Data sources: :
             <span className="text-[#000] font-semibold ml-2">
               {specificReportDetailsLoading
                 ? "Loading..."
@@ -292,7 +256,7 @@ const SpecificReport = () => {
         </div>
 
         {/* Stats */}
-        <div className="my-5">
+        <div className="my-7">
           <p className="text-[#6C7275] text-base mb-1">
             Age :
             <span className="text-[#000] font-semibold ml-2">
@@ -334,6 +298,25 @@ const SpecificReport = () => {
             Data source:
             <span className="text-[#000] font-semibold ml-2">Twitter</span>
           </p> */}
+
+          {/* {Object.entries(allClaim).map(([key, value]) => {
+            if (value) {
+              return (
+                <>
+                  <p className="font-semibold text-[#000]">
+                    {value.slice(0, 250)}
+                    {value.length > 250 && "..."}
+                  </p>
+                  <p className="text-[#6C7275] text-sm mt-3 font-semibold mb-4">
+                    Data source:
+                    <span className="text-[#000] font-semibold ml-2 ">
+                      {key}
+                    </span>
+                  </p>
+                </>
+              );
+            }
+          })} */}
 
           {!specificReportDetailsLoading && allClaim ? (
             Object.entries(allClaim).map(([key, value]) => {
@@ -530,17 +513,6 @@ const SpecificReport = () => {
 
         {/* Button */}
 
-        {showCaseStatusStep0 && (
-          <div className="mt-7">
-            <button
-              onClick={handleChangeStatusCase}
-              className="bg-[#3FDD78] rounded-lg  py-2 px-3 border-none outline-none text-[#fff] "
-            >
-              {isLoading ? "Opening..." : "Open case"}
-            </button>
-          </div>
-        )}
-
         {showCaseStatusStep1 && (
           <div className="mt-7">
             <button
@@ -612,4 +584,4 @@ const SpecificReport = () => {
   );
 };
 
-export default SpecificReport;
+export default ReviewProgress;
