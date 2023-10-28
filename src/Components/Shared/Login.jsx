@@ -28,17 +28,12 @@ const Login = () => {
       onSubmit: async (values) => {
         try {
           setRequestLoading(true);
-          await axios
-            .post(
-              `${apiUrl}/https://vast-rose-bonobo-tux.cyclic.cloud/api/regulator/login`,
-              values
-            )
-            .then(() => {
-              setRequestLoading(false);
-              toast.success("Logged in Successfully");
-              setOpenLoginModal(!openLoginModal);
-              setStep("all_reports");
-            });
+          await axios.post(`${apiUrl}/api/regulator/login`, values).then(() => {
+            setRequestLoading(false);
+            toast.success("Logged in Successfully");
+            setOpenLoginModal(!openLoginModal);
+            setStep("all_reports");
+          });
         } catch (err) {
           toast.error(err?.response?.data?.message);
           setRequestLoading(false);
