@@ -4,6 +4,7 @@ import { loginModalScehma } from "../../validation-schema";
 import axios from "axios";
 import { toast } from "react-toastify";
 import RequestLoader from "./RequestLoader";
+import apiUrl from "../../utils/baseURL";
 
 const Login = () => {
   const {
@@ -29,7 +30,7 @@ const Login = () => {
           setRequestLoading(true);
           await axios
             .post(
-              "https://vast-rose-bonobo-tux.cyclic.cloud/api/regulator/login",
+              `${apiUrl}/https://vast-rose-bonobo-tux.cyclic.cloud/api/regulator/login`,
               values
             )
             .then(() => {
