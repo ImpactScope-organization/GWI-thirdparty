@@ -37,3 +37,8 @@ body {
   border-color: #3fdd78 !important;
   background-color: #3fdd78 !important;
 }
+
+.card_shadow {
+  box-shadow: 0px 33px 32px -16px rgba(0, 0, 0, 0.1),
+    0px 0px 16px 4px rgba(0, 0, 0, 0.04);
+}

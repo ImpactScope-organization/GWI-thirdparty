@@ -1,11 +1,10 @@
-const environment = "production";
+const environment = "dev";
 
 let apiUrl;
 if (environment === "production") {
-  apiUrl = "https://rich-teal-octopus-kit.cyclic.app"
+  apiUrl = "https://rich-teal-octopus-kit.cyclic.app";
 } else {
-  apiUrl = "http://localhost:5000"
+  apiUrl = "http://localhost:5000";
 }
 
-
-export default apiUrl
+export default apiUrl;

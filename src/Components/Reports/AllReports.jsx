@@ -119,7 +119,9 @@ const Report = ({ data, activeTab, loading }) => {
             <div
               key={index}
               // onClick={() => setStep("specific_report")}
-              onClick={() => handleNavigate(report?.companyName, report._id)}
+              onClick={() => {
+                handleNavigate(report?.companyName, report._id);
+              }}
               style={{
                 boxShadow:
                   " 0px 33px 32px -16px rgba(0, 0, 0, 0.10), 0px 0px 16px 4px rgba(0, 0, 0, 0.04)",
