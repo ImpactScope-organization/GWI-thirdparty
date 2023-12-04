@@ -145,7 +145,7 @@ const Report = ({ data, activeTab, loading }) => {
                     : report?.jurisdiction && report?.jurisdiction}
                 </span>
               </p>
-              <p className="text-[#6C7275] mr-3 font-semibold">
+              {/* <p className="text-[#6C7275] mr-3 font-semibold">
                 Data sources :
                 <span className="text-[#000] font-semibold ml-2 text-sm">
                   {loading
@@ -177,7 +177,7 @@ const Report = ({ data, activeTab, loading }) => {
                     {report?.priority}
                   </label>
                 </div>
-              </div>
+              </div> */}
             </div>
           ))
         : data?.message && <p>{data?.message}</p>}

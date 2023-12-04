@@ -12,6 +12,7 @@ module.exports = {
         lightgrey: "#E8ECEF",
         blackText: "#141718",
         danger: "#FF4158",
+        review: "#3377FF",
       },
     },
   },
