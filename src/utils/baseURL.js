@@ -2,7 +2,7 @@ const environment = "production";
 
 let apiUrl;
 if (environment === "production") {
-  apiUrl = "https://gwi-env.lm.r.appspot.com";
+  apiUrl = "http://159.69.11.71";
 } else {
   apiUrl = "http://localhost:5000";
 }
