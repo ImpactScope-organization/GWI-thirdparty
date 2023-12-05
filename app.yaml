@@ -1,5 +1,5 @@
 runtime: nodejs20
-service: frontend
+service: thirdparty
 handlers:
   - url: /.*
     secure: always
