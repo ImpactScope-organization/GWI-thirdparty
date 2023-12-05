@@ -16,8 +16,8 @@ const Login = () => {
   } = useStepsContext();
 
   const initialValues = {
-    email: "sean@impactscope.com",
-    password: "kunty6-subzap-tikNib",
+    email: "",
+    password: "",
   };
 
   const { values, errors, touched, handleBlur, handleChange, handleSubmit } =
