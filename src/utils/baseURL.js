@@ -2,7 +2,7 @@ const environment = "production";
 
 let apiUrl;
 if (environment === "production") {
-  apiUrl = "http://159.69.11.71";
+  apiUrl = "https://gwi-backend.dev.impactscope.com";
 } else {
   apiUrl = "http://localhost:5000";
 }
