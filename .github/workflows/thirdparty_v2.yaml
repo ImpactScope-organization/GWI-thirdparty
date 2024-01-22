@@ -2,7 +2,7 @@ name: Deploy Third-Party v2 on GCP.
 
 on:
   push:
-    branches: [TP_V2]
+    branches: [staging]
 
   workflow_dispatch:
 jobs:
