@@ -571,7 +571,8 @@ const SpecificReport = () => {
                     onClick={() => {
                       // open case
                       if (
-                        specificReportDetailsData?.results?.pending === "true"
+                        specificReportDetailsData?.results?.sentToRegulators ===
+                        "true"
                       ) {
                         handleChangeStatusCase();
                       } else {
@@ -580,7 +581,8 @@ const SpecificReport = () => {
                     }}
                     className={`bg-darkGreen rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
                   >
-                    {specificReportDetailsData?.results?.pending === "true"
+                    {specificReportDetailsData?.results?.sentToRegulators ===
+                    "true"
                       ? "Open Case"
                       : "Close Case"}
                   </button>
@@ -620,7 +622,8 @@ const SpecificReport = () => {
                         : "text-blackText"
                     } text-[16px]`}
                   >
-                    {specificReportDetailsData?.results?.pending === "true"
+                    {specificReportDetailsData?.results?.sentToRegulators ===
+                    "true"
                       ? "Disregard Case"
                       : "Add Update"}
                   </button>
