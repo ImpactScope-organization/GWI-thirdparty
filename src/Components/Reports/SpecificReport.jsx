@@ -9,6 +9,7 @@ import {
   useGetChangeStatusToReview,
   useUpdateCase,
   useGetSpecificReportDetails,
+  useDisregardCase,
 } from "../../Hooks/reports-hooks";
 import { formattedDate } from "../../utils/date";
 import PriorityColor from "./PriorityColor";
@@ -37,9 +38,9 @@ const SpecificReport = () => {
   } = useGetChangeStatusToReview(
     JSON.stringify({
       company,
-      pending: "true",
+      pending: "false",
       reviewing: "true",
-      sentToRegulators: "false",
+      // sentToRegulators: "false",
       reviewed: "false",
       caseOpenedTimeStamp: formattedDate,
     })
@@ -114,6 +115,31 @@ const SpecificReport = () => {
     );
   };
 
+  // disregard case
+  const { mutate: disregardMutate, isDisregardLoading } = useDisregardCase();
+
+  // currentCountry
+
+  const handleDisregardCase = async () => {
+    disregardMutate(
+      JSON.stringify({
+        disregard: "true",
+        id: specificReportDetailsData?.results?.id,
+      }),
+      {
+        onSuccess: (response) => {
+          if (response?.data?.message) {
+            toast.error(response?.data?.message);
+          }
+          if (response?.data?.results) {
+            toast.success("Case has been disregarded");
+            callAPIAgain();
+          }
+        },
+      }
+    );
+  };
+
   // updateCase
 
   const [updateReportComment, setUpdateReportComment] = useState("");
@@ -160,7 +186,7 @@ const SpecificReport = () => {
         company,
         reviewed: "true",
         reviewing: "false",
-        sentToRegulators: "false",
+        // sentToRegulators: "false",
       })
       // currentCountry
     );
@@ -189,16 +215,11 @@ const SpecificReport = () => {
     isLoading: specificReportDetailsLoading,
   } = useGetSpecificReportDetails(specificReportDetailsID);
 
-  // const allClaim = JSON.parse(specificReportDetailsData?.results?.claims);
   const allClaim = specificReportDetailsData?.results?.claims
     ? JSON.parse(specificReportDetailsData?.results?.claims)
     : null;
 
   console.log("allClaim: ", allClaim);
-
-  // useEffect(() => {
-  //   callAPIAgain();
-  // }, []);
 
   return (
     <div>
@@ -329,7 +350,7 @@ const SpecificReport = () => {
             </h2>
             <div className="grid grid-cols-2 gap-4">
               {specificReportDetailsData?.results?.sources &&
-              JSON?.parse(specificReportDetailsData?.results?.sources)?.length >
+              JSON.parse(specificReportDetailsData?.results?.sources)?.length >
                 0 ? (
                 specificReportDetailsData?.results?.sources &&
                 JSON?.parse(specificReportDetailsData?.results?.sources)?.map(
@@ -463,10 +484,10 @@ const SpecificReport = () => {
                 Case status
               </p>
               <p className="text-blackText ml-1 text-[1em] text-base mb-1 font-md">
-                <span
-                  className={`py-1 px-3 text-white rounded-3xl ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
+                <p
+                  className={`py-1 px-3 text-center text-white rounded-3xl ${
+                    specificReportDetailsData?.results?.pending === "true" &&
+                    specificReportDetailsData?.results?.disregard === "false"
                       ? "bg-foggyGrey"
                       : specificReportDetailsData?.results?.reviewing === "true"
                       ? "bg-review"
@@ -475,20 +496,17 @@ const SpecificReport = () => {
                       : "bg-danger"
                   }`}
                 >
-                  {console.log(
-                    typeof specificReportDetailsData?.results?.sentToRegulators
-                  )}
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
+                  {specificReportDetailsData?.results?.pending === "true" &&
+                  specificReportDetailsData?.results?.disregard === "false"
                     ? "Pending Review"
                     : specificReportDetailsData?.results?.reviewing === "true"
                     ? "In review"
                     : specificReportDetailsData?.results?.reviewed === "true"
-                    ? "closed"
+                    ? "Closed"
                     : specificReportDetailsData?.results?.disregard === "true"
-                    ? "disregarded"
+                    ? "Disregard"
                     : ""}
-                </span>
+                </p>
               </p>
               {specificReportDetailsData?.results?.caseOpenedTimeStamp && (
                 <div className="col-span-2">
@@ -565,78 +583,82 @@ const SpecificReport = () => {
                   )}
                 </div>
               )}
-              {!isEditing && (
-                <button
-                  onClick={() => {
-                    // open case
-                    if (
-                      specificReportDetailsData?.results?.sentToRegulators ===
-                      "true"
-                    ) {
-                      handleChangeStatusCase();
-                    } else {
-                      handleCloseCase();
-                    }
-                  }}
-                  className={`bg-darkGreen rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
-                >
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
-                    ? "Open Case"
-                    : "Close Case"}
-                </button>
-              )}
-              {isEditing && (
-                <button
-                  onClick={() => {
-                    handleAssignCase();
-                  }}
-                  className={`bg-blackText rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
-                >
-                  Save
-                </button>
-              )}
-              {!isEditing && (
-                <button
-                  onClick={() => {
-                    if (
-                      specificReportDetailsData?.results?.sentToRegulators ===
-                        "false" &&
-                      specificReportDetailsData?.results?.reviewing === "true"
-                    ) {
-                      setisEditing(true);
-                    }
-                  }}
-                  className={`bg-white border ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
-                      ? "border-danger"
-                      : "border-blackText"
-                  } rounded-lg  py-2 px-2 ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
-                      ? "text-danger"
-                      : "text-blackText"
-                  } text-[16px]`}
-                >
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
-                    ? "Disregard Case"
-                    : "Add Update"}
-                </button>
-              )}
-              {isEditing && (
-                <button
-                  onClick={() => {
-                    setisEditing(false);
-                  }}
-                  className={`bg-white border border-blackText
+              {specificReportDetailsData?.results?.reviewed === "false" &&
+                specificReportDetailsData?.results?.disregard === "false" && (
+                  <>
+                    {!isEditing && (
+                      <button
+                        onClick={() => {
+                          // open case
+                          if (
+                            specificReportDetailsData?.results?.pending ===
+                            "true"
+                          ) {
+                            handleChangeStatusCase();
+                          } else {
+                            handleCloseCase();
+                          }
+                        }}
+                        className={`bg-darkGreen rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
+                      >
+                        {specificReportDetailsData?.results?.pending === "true"
+                          ? "Open Case"
+                          : "Close Case"}
+                      </button>
+                    )}
+                    {isEditing && (
+                      <button
+                        onClick={() => {
+                          handleAssignCase();
+                        }}
+                        className={`bg-blackText rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
+                      >
+                        Save
+                      </button>
+                    )}
+                    {!isEditing && (
+                      <button
+                        onClick={() => {
+                          if (
+                            specificReportDetailsData?.results?.pending ===
+                              "false" &&
+                            specificReportDetailsData?.results?.reviewing ===
+                              "true"
+                          ) {
+                            setisEditing(true);
+                          } else {
+                            handleDisregardCase();
+                          }
+                        }}
+                        className={`bg-white border ${
+                          specificReportDetailsData?.results?.pending === "true"
+                            ? "border-danger"
+                            : "border-blackText"
+                        } rounded-lg  py-2 px-2 ${
+                          specificReportDetailsData?.results?.pending === "true"
+                            ? "text-danger"
+                            : "text-blackText"
+                        } text-[16px]`}
+                      >
+                        {specificReportDetailsData?.results?.pending === "true"
+                          ? "Disregard Case"
+                          : "Add Update"}
+                      </button>
+                    )}
+                    {isEditing && (
+                      <button
+                        onClick={() => {
+                          setisEditing(false);
+                        }}
+                        className={`bg-white border border-blackText
                    rounded-lg  py-2 px-2 text-blackText
                     text-[16px]`}
-                >
-                  Cancel
-                </button>
-              )}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </>
+                )}
             </div>
           </div>
 

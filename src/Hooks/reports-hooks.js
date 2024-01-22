@@ -82,6 +82,21 @@ const useAssignCase = (reportData) => {
   );
 };
 
+const useDisregardCase = (reportData) => {
+  // console.log(reportData)
+  const queryClient = useQueryClient();
+  return useMutation(
+    (body) => {
+      return ReportService.disregardCase(body);
+    },
+    {
+      onSuccess: () => {
+        queryClient.invalidateQueries("assignCase");
+      },
+    }
+  );
+};
+
 const useUpdateCase = (reportData) => {
   // console.log(reportData)
   const queryClient = useQueryClient();
@@ -106,5 +121,6 @@ export {
   useGetChangeStatusToReview,
   useAssignCase,
   useUpdateCase,
+  useDisregardCase,
   useGetSingleReportDetails,
 };

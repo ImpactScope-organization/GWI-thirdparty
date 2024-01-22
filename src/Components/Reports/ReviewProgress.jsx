@@ -37,10 +37,8 @@ const SpecificReport = () => {
   } = useGetChangeStatusToReview(
     JSON.stringify({
       company,
-      pending: "true",
       reviewing: "true",
-      sentToRegulators: "false",
-      reviewed: "false",
+      // sentToRegulators: "false",
       caseOpenedTimeStamp: formattedDate,
     })
   );
@@ -73,7 +71,6 @@ const SpecificReport = () => {
   const { mutate: addMutate, isLoading } = useAssignCase(
     JSON.stringify({
       ...reportAssignCaseData,
-      pending: "false",
       caseAssignedTimeStamp: formattedDate,
       openedBy: "John Doe (case file officer)",
       company,
@@ -160,7 +157,7 @@ const SpecificReport = () => {
         company,
         reviewed: "true",
         reviewing: "false",
-        sentToRegulators: "false",
+        // sentToRegulators: "false",
       })
       // currentCountry
     );
@@ -465,8 +462,7 @@ const SpecificReport = () => {
               <p className="text-blackText ml-1 text-[1em] text-base mb-1 font-md">
                 <span
                   className={`py-1 px-3 text-white rounded-3xl ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
+                    specificReportDetailsData?.results?.pending === "true"
                       ? "bg-foggyGrey"
                       : specificReportDetailsData?.results?.reviewing === "true"
                       ? "bg-review"
@@ -478,8 +474,7 @@ const SpecificReport = () => {
                   {console.log(
                     typeof specificReportDetailsData?.results?.sentToRegulators
                   )}
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
+                  {specificReportDetailsData?.results?.pending === "true"
                     ? "Pending Review"
                     : specificReportDetailsData?.results?.reviewing === "true"
                     ? "In review"
