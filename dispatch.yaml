@@ -1,0 +1,12 @@
+dispatch:
+  - url: "gwi-reg.impactscope.com/*"
+    service: thirdparty-v2
+
+  - url: "gwi-admin.dev.impactscope.com/*"
+    service: frontend
+
+ - url: "gwi-admin.impactscope.com/*"
+    service: frontend-v2
+    
+  - url: "gwi.dev.impactscope.com/*"
+    service: thirdparty
