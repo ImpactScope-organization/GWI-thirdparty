@@ -47,23 +47,23 @@ const Login = () => {
       <div className="flex justify-center mt-20 w-full">
         <div
           //   onSubmit={handleSubmit}
-          className="bg-[#fff] w-[98%] lg:w-[35%] rounded-3xl py-4 px-3  sm:p-6 sm:px-7 md:py-10 md:px-10 "
+          className="bg-[#fff] w-[98%] lg:w-[40%] rounded-3xl py-4 px-3  sm:p-6 sm:px-7 md:py-10 md:px-16 "
         >
           <div>
             <div className="flex justify-center items-center ">
               <img src="./assets/__logo.png" alt="logo" className="w-[80px]" />
-              <div>
-                <h1 className="text-lg font-bold leading-5">
+              <div className="ml-[10px]">
+                <h1 className="text-lg font-bold text-darkBlack leading-5">
                   Greenwashing <br /> Identifier
                 </h1>
-                <p className="text-sm text-[#626262] ">By ImpactScope</p>
+                <p className="text-sm text-reportGrey ">By ImpactScope</p>
               </div>
             </div>
-            <h3 className="uppercase text-darkblue mt-5 text-2xl sm:text-3xl md:text-4xl font-[600] text-center">
+            <h3 className="text-darkBlack mt-8 text-2xl sm:text-3xl md:text-4xl font-[700] text-center leading-[48px]">
               Welcome to GWI
             </h3>
 
-            <p className="font-BalsamiqSans text-center text-[#626262] text-lg mt-3 ">
+            <p className="font-BalsamiqSans text-center text-reportGrey text-lg mt-3 ">
               Sign in to get started
             </p>
           </div>
@@ -101,10 +101,7 @@ const Login = () => {
             <div className="!mt-10">
               <button
                 type="submit"
-                //   onClick={openToggle === false ? onClick : null}
-                //   disabled={loading}
-                // disabled={loading}
-                className="bg-[#3FDD78] cursor-pointer w-full relative h-[64px]  text-white text-center  rounded-md  py-3 text-lg font-medium"
+                className="bg-primary cursor-pointer w-full relative h-[64px]  text-white text-center  rounded-md  py-3 text-lg font-medium"
               >
                 {requestLoading ? <RequestLoader /> : "Sign in"}
               </button>

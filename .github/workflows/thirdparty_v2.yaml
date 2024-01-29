@@ -63,7 +63,7 @@ jobs:
         name: "Deploy to App Engine"
         uses: "google-github-actions/deploy-appengine@v1"
         with:
-          deliverables: thirdparty_v2.yaml,dispatch.yaml
+          deliverables: thirdparty_v2
           project_id: ${{ secrets.GCP_PROJECT }}
 
       - name: "Check Deployment"

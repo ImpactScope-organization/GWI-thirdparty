@@ -220,7 +220,7 @@ const SpecificReport = () => {
                 ? "Loading..."
                 : specificReportDetailsData?.results?.sendToRegulatorsTimeStamp}
             </p>
-            <h1 className="leading-[64px] text-[#000] text-2xl font-bold">
+            <h1 className="leading-[64px] text-darkBlack text-2xl font-bold">
               {specificReportDetailsLoading
                 ? "Loading..."
                 : specificReportDetailsData?.results?.companyName}

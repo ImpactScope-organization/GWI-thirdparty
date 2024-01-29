@@ -28,7 +28,7 @@ const AllReports = () => {
       <div className="flex justify-between items-start mb-3">
         {/* Left */}
         <div>
-          <h1 className="text-[#000] font-bold text-[40px] leading-[64px]">
+          <h1 className="text-darkBlack font-bold text-[40px] leading-[64px]">
             Reports
           </h1>
           <p className="text-reportGrey text-lg font-karla font-normal mb-7 leading-[36px]">
@@ -124,7 +124,7 @@ const Report = ({ data, activeTab, loading }) => {
                 boxShadow:
                   " 0px 13px 12px -16px rgba(0, 0, 0, 0.05), 0px 0px 12px 0px rgba(0, 0, 0, 0.1)",
               }}
-              className="p-4 cursor-pointer rounded-xl border border-borderLight hover:border-black"
+              className="p-4 cursor-pointer rounded-xl border border-borderLight hover:border-darkBlack"
             >
               <p className="text-[#6C7275] text-[14px] mb-[4px] font-medium">
                 {loading
@@ -132,12 +132,12 @@ const Report = ({ data, activeTab, loading }) => {
                   : report?.sendToRegulatorsTimeStamp &&
                     report?.sendToRegulatorsTimeStamp}
               </p>
-              <h1 className="mb-3 text-[#000] text-2xl font-semibold">
+              <h1 className="mb-3 text-darkBlack text-2xl font-semibold">
                 {loading ? "Loading..." : report?.companyName}
               </h1>
               <p className="text-[#6C7275] mt-[16px] text-[14px] mr-3 font-medium">
                 Jurisdiction :
-                <span className="text-[#000] font-semibold ml-2 text-sm ">
+                <span className="text-darkBlack font-semibold ml-2 text-sm ">
                   {loading
                     ? "loading..."
                     : report?.jurisdiction && report?.jurisdiction}
@@ -145,7 +145,7 @@ const Report = ({ data, activeTab, loading }) => {
               </p>
             </div>
           ))
-        : data?.message && <p>{data?.message}</p>}
+        : data?.message && <p className="text-darkBlack">{data?.message}</p>}
     </>
   );
 };

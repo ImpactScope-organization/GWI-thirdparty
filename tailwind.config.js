@@ -5,7 +5,6 @@ module.exports = {
     extend: {
       colors: {
         primary: "#4DC601",
-        // primary: "#3FDD78",
         darkGreen: "#4DC601",
         reportGrey: "#8A929D",
         greyText: "#6C7275",
@@ -15,6 +14,7 @@ module.exports = {
         blackText: "#141718",
         danger: "#FF4158",
         review: "#3377FF",
+        darkBlack: "#181E2f",
       },
     },
   },

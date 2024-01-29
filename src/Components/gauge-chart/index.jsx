@@ -38,19 +38,19 @@ const CustomGaugeChart = ({ percentage = 0 }) => {
           x={center}
           y={center - 25}
           textAnchor="middle"
-          fontSize="18"
-          fill="#6C7275"
-          className="font-light text-foggyGrey"
+          fontSize="16px"
+          fill="#8A929D"
+          className="font-medium leading-[20px] text-reportGrey"
         >
-          Greenwash Risk
+          Greenwashing risk
         </text>
         <text
-          x={center}
+          x={center + 10}
           y={center + 15}
           textAnchor="middle"
           fontSize="26"
           fill="#141718"
-          className="font-bold text-blackText"
+          className="font-[600] text-darkBlack"
         >
           {percentage}%
         </text>
