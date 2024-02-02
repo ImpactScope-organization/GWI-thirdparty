@@ -659,7 +659,7 @@ const SpecificReport = () => {
             </div>
           </div>
 
-          <div className="card_shadow mt-8 gap-4 rounded-2xl flex basis-4/12 flex-col z-50 p-[16px]">
+          {/* <div className="card_shadow mt-8 gap-4 rounded-2xl flex basis-4/12 flex-col z-50 p-[16px]">
             <h2 className="text-[18px] leading-[24px] font-[600]">Documents</h2>
             <div
               onClick={() => {
@@ -672,7 +672,7 @@ const SpecificReport = () => {
                 <span className="truncate">AIB_Group_PLC</span>.xlsx
               </h2>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>
