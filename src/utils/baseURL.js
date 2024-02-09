@@ -1,4 +1,4 @@
-const environment = "staging";
+const environment = "dev";
 
 let apiUrl;
 if (environment === "production") {
