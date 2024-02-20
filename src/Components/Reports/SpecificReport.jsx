@@ -456,7 +456,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
                 <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
-                  Etherscan URL
+                  Snowtrace URL
                 </p>
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
