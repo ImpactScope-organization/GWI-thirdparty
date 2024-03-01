@@ -1,4 +1,4 @@
-const environment = "v2-avax";
+const environment = "v2-astr";
 
 let apiUrl;
 if (environment === "production") {
@@ -9,6 +9,8 @@ if (environment === "production") {
   apiUrl = "https://gwi-be-avax.impactscope.com";
 } else if (environment === "dev") {
   apiUrl = "https://gwi-be-dev.impactscope.com";
+} else if (environment === "v2-astr") {
+  apiUrl = "https://gwi-be-astr.impactscope.com";
 } else {
   apiUrl = "http://localhost:5000";
 }
