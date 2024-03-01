@@ -1,4 +1,4 @@
-name: Deploy Third-Party v2-avax on GCP.
+name: Deploy Third-Party-v2-astr on GCP.
 
 on:
   push:
