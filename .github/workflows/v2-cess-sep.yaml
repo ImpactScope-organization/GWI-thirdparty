@@ -1,4 +1,4 @@
-name: Deploy Third-Party v2 on GCP.
+name: Deploy Third-Party-cess-sepolia v2 on GCP.
 
 on:
   push:
