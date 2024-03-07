@@ -441,12 +441,12 @@ const SpecificReport = () => {
               {/* Links */}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
-                  IPFS link
+                  DeShare link
                 </p>
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <a
-                  href={`https://ipfs.io/ipfs/${specificReportDetailsData?.results?.IPFSHash}`}
+                  href={`${specificReportDetailsData?.results?.IPFSHash}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-darkGreen col-span-1 truncate text-[1em]  mb-1 font-medium"
@@ -456,7 +456,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
                 <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
-                  Etherscan URL
+                  Subscan link
                 </p>
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
