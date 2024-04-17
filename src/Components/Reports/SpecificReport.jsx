@@ -441,7 +441,7 @@ const SpecificReport = () => {
               {/* Links */}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
-                  IPFS link
+             DeShare Link
                 </p>
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
@@ -456,7 +456,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
                 <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
-                  Etherscan URL
+                  Subscan link
                 </p>
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
