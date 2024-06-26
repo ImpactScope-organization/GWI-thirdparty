@@ -446,7 +446,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <a
-                  href={`https://ipfs.io/ipfs/${specificReportDetailsData?.results?.IPFSHash}`}
+                  href={`${specificReportDetailsData?.results?.IPFSHash}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-darkGreen col-span-1 truncate text-[1em]  mb-1 font-medium"
