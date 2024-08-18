@@ -43,31 +43,64 @@ const Login = () => {
     });
 
   return (
-    <div className="fixed z-20 left-0 top-0 right-0 w-full px-4 overflow-x-hidden overflow-y-auto  h-full bg-[rgb(0,0,0,0.75)]">
-      <div className="flex justify-center mt-20 w-full">
+    
+    <div className="fixed z-20 left-0 top-0 right-0 w-full  overflow-x-hidden overflow-y-auto  h-full bg-white">
+      <div className="flex justify-between w-full h-full">
+        <div className="hidden md:flex  flex-col bg-[#E3F2DA] w-1/2 gap-4 p-4 ">
+          <div className="flex flex-col gap-6 lg:flex-row w-full justify-between h-12">
+						<div className="flex gap-x-4">
+							<div
+								className="flex justify-center items-center px-1 cursor-pointer"
+								onClick={() => {
+									window.open("https://astar.network/solutions", "_blank");
+								}}
+							>
+								<img src="./assets/GFIN.svg" alt="logo" className=" " />
+							</div>
+
+						
+						</div>
+						<div
+							className="flex flex-col w-32 lg:w-auto cursor-pointer"
+							onClick={() => {
+								window.open("https://www.insg.ai", "_blank");
+							}}
+						>
+							<img src="./assets/AILogo.svg" alt="logo" className=" " />
+						</div>
+					</div>
+          <div className="flex  w-full h-full p-20">
+          <img src="./assets/login_sideImage.png" alt="logo" className="" />
+          </div>
+
+        </div>
+      <div className="flex justify-center items-center w-full md:w-1/2 h-full">
         <div
           //   onSubmit={handleSubmit}
-          className="bg-[#fff] w-[98%] lg:w-[35%] rounded-3xl py-4 px-3  sm:p-6 sm:px-7 md:py-10 md:px-10 "
+          className="w-[70%] "
         >
-          <div>
+          <div className="">
             <div className="flex justify-center items-center ">
               <img src="./assets/__logo.png" alt="logo" className="w-[80px]" />
-              <div>
+              <div className="ml-[10px]">
                 <h1 className="text-lg font-bold leading-5">
                   Greenwashing <br /> Identifier
                 </h1>
-                <p className="text-sm text-[#626262] ">By ImpactScope</p>
+                <p className="text-sm text-reportGrey ">By ImpactScope</p>
               </div>
             </div>
-            <h3 className="uppercase text-darkblue mt-5 text-2xl sm:text-3xl md:text-4xl font-[600] text-center">
-              Welcome to GWI
+            <h3 className="text-darkblue mt-8 text-2xl sm:text-3xl md:text-4xl font-[700] text-center leading-[48px]">
+              Welcome to GWI 
             </h3>
 
-            <p className="font-BalsamiqSans text-center text-[#626262] text-lg mt-3 ">
+            <p className="font-BalsamiqSans text-center text-reportGrey text-lg mt-3 ">
               Sign in to get started
             </p>
+            {/* <div className="flex flex-col h-20 rounded-xl p-4  bg-[#FFF9D9] mt-10">
+             <p className="text-base text-[#181E2F]">Login:<span className="font-bold"> Demo</span></p> 
+             <p className="text-base text-[#181E2F]">Password:<span className="font-bold"> Demo</span></p>
+            </div> */}
           </div>
-
           <form onSubmit={handleSubmit} className="w-full mt-5 space-y-3">
             <input
               type="email"
@@ -101,16 +134,14 @@ const Login = () => {
             <div className="!mt-10">
               <button
                 type="submit"
-                //   onClick={openToggle === false ? onClick : null}
-                //   disabled={loading}
-                // disabled={loading}
-                className="bg-[#3FDD78] cursor-pointer w-full relative h-[64px]  text-white text-center  rounded-md  py-3 text-lg font-medium"
+                className="bg-primary cursor-pointer w-full relative h-[64px]  text-white text-center  rounded-md  py-3 text-lg font-medium"
               >
                 {requestLoading ? <RequestLoader /> : "Sign in"}
               </button>
             </div>
           </form>
         </div>
+      </div>
       </div>
     </div>
   );

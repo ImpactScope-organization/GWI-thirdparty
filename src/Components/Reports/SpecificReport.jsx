@@ -9,6 +9,7 @@ import {
   useGetChangeStatusToReview,
   useUpdateCase,
   useGetSpecificReportDetails,
+  useDisregardCase,
 } from "../../Hooks/reports-hooks";
 import { formattedDate } from "../../utils/date";
 import PriorityColor from "./PriorityColor";
@@ -37,9 +38,9 @@ const SpecificReport = () => {
   } = useGetChangeStatusToReview(
     JSON.stringify({
       company,
-      pending: "true",
+      pending: "false",
       reviewing: "true",
-      sentToRegulators: "false",
+      // sentToRegulators: "false",
       reviewed: "false",
       caseOpenedTimeStamp: formattedDate,
     })
@@ -114,6 +115,31 @@ const SpecificReport = () => {
     );
   };
 
+  // disregard case
+  const { mutate: disregardMutate, isDisregardLoading } = useDisregardCase();
+
+  // currentCountry
+
+  const handleDisregardCase = async () => {
+    disregardMutate(
+      JSON.stringify({
+        disregard: "true",
+        id: specificReportDetailsData?.results?.id,
+      }),
+      {
+        onSuccess: (response) => {
+          if (response?.data?.message) {
+            toast.error(response?.data?.message);
+          }
+          if (response?.data?.results) {
+            toast.success("Case has been disregarded");
+            callAPIAgain();
+          }
+        },
+      }
+    );
+  };
+
   // updateCase
 
   const [updateReportComment, setUpdateReportComment] = useState("");
@@ -160,7 +186,7 @@ const SpecificReport = () => {
         company,
         reviewed: "true",
         reviewing: "false",
-        sentToRegulators: "false",
+        // sentToRegulators: "false",
       })
       // currentCountry
     );
@@ -189,16 +215,11 @@ const SpecificReport = () => {
     isLoading: specificReportDetailsLoading,
   } = useGetSpecificReportDetails(specificReportDetailsID);
 
-  // const allClaim = JSON.parse(specificReportDetailsData?.results?.claims);
   const allClaim = specificReportDetailsData?.results?.claims
     ? JSON.parse(specificReportDetailsData?.results?.claims)
     : null;
 
   console.log("allClaim: ", allClaim);
-
-  // useEffect(() => {
-  //   callAPIAgain();
-  // }, []);
 
   return (
     <div>
@@ -206,14 +227,14 @@ const SpecificReport = () => {
 
       <div
         id="report-container"
-        className="flex flex-col md:flex-row gap-6 my-10 px-16 max-w-[1120px] mx-auto"
+        className="flex flex-col md:flex-row gap-6 my-10 px-16 lg:px-6 max-w-[1120px] mx-auto"
       >
         <div
           style={{
             boxShadow:
               "0px 33px 32px -16px rgba(0, 0, 0, 0.10), 0px 0px 16px 4px rgba(0, 0, 0, 0.04)",
           }}
-          className="basis-8/12 p-[16px] mx-auto rounded-2xl "
+          className="basis-8/12 max-w-[740px] p-[16px]  mx-auto rounded-2xl "
         >
           {/* Top */}
 
@@ -223,40 +244,40 @@ const SpecificReport = () => {
                 ? "Loading..."
                 : specificReportDetailsData?.results?.sendToRegulatorsTimeStamp}
             </p>
-            <h1 className="leading-[64px] text-[#000] text-2xl font-bold">
+            <h1 className="leading-[64px] text-darkBlack text-2xl font-bold">
               {specificReportDetailsLoading
                 ? "Loading..."
                 : specificReportDetailsData?.results?.companyName}
             </h1>
             <div className="mt-[16px] grid grid-cols-5 max-w-[60%]">
-              <p className="text-reportGrey  col-span-2 text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey  col-span-2 text-[1em] text-base mb-1 font-medium">
                 Jurisdiction
               </p>
-              <p className="text-blackText col-span-3 ml-4 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack col-span-3 ml-4 text-[1em] text-base mb-1 font-medium">
                 {specificReportDetailsLoading
                   ? "Loading..."
                   : specificReportDetailsData?.results?.jurisdiction}
               </p>
-              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                 Sector
               </p>
-              <p className="text-blackText col-span-3 ml-4 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack col-span-3 ml-4 text-[1em] text-base mb-1 font-medium">
                 {specificReportDetailsLoading
                   ? "Loading..."
                   : specificReportDetailsData?.results?.sector}
               </p>
-              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                 Annual Revenue
               </p>
-              <p className="text-blackText col-span-3 ml-4 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack col-span-3 ml-4 text-[1em] text-base mb-1 font-medium">
                 {specificReportDetailsLoading
                   ? "Loading..."
                   : specificReportDetailsData?.results?.annualRevenue}
               </p>
-              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                 Employees
               </p>
-              <p className="text-blackText col-span-3 ml-4 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack col-span-3 ml-4 text-[1em] text-base mb-1 font-medium">
                 {specificReportDetailsLoading
                   ? "Loading..."
                   : specificReportDetailsData?.results?.noOfEmployees}
@@ -265,11 +286,11 @@ const SpecificReport = () => {
           </div>
 
           {/* Contradiction */}
-          <div className="bg-[#F3F5F7] mt-[32px] p-3 rounded-md mb-5">
-            <p className="text-reportGrey text-[1em] text-base font-md">
+          <div className="bg-[#F3F5F7] p-3 rounded-md mt-[32px] mb-[16px]">
+            <p className="text-reportGrey text-[1em] text-base font-medium">
               Contradictions
             </p>
-            <p className="text-blackText mt-[8px] text-[1em] text-base  font-md">
+            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium">
               {specificReportDetailsData?.results?.contradiction &&
                 specificReportDetailsData?.results?.contradiction
                   ?.split("\n")
@@ -278,17 +299,16 @@ const SpecificReport = () => {
                     <>
                       {text}
                       <br />
-                      <br />
                     </>
                   ))}
             </p>
           </div>
           {/*    Potential inconsistencies */}
-          <div className="bg-[#F3F5F7] mt-[32px] p-3 rounded-md mb-5">
-            <p className="text-reportGrey text-[1em] text-base font-md">
+          <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
+            <p className="text-reportGrey text-[1em] text-base font-medium">
               Potential inconsistencies
             </p>
-            <p className="text-blackText mt-[8px] text-[1em] text-base  font-md ">
+            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
               {specificReportDetailsData?.results?.potentialInconsistencies >
                 "" &&
                 specificReportDetailsData?.results?.potentialInconsistencies
@@ -298,17 +318,16 @@ const SpecificReport = () => {
                     <>
                       {text}
                       <br />
-                      <br />
                     </>
                   ))}
             </p>
           </div>
           {/* Unsubstantiated claims */}
-          <div className="bg-[#F3F5F7] mt-[32px] p-3 rounded-md mb-5">
-            <p className="text-reportGrey text-[1em] text-base font-md">
+          <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
+            <p className="text-reportGrey text-[1em] text-base font-medium">
               Unsubstantiated claims
             </p>
-            <p className="text-blackText mt-[8px] text-[1em] text-base  font-md ">
+            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
               {specificReportDetailsData?.results?.unsubstantiatedClaims &&
                 specificReportDetailsData?.results?.unsubstantiatedClaims
                   ?.split("\n")
@@ -317,30 +336,29 @@ const SpecificReport = () => {
                     <>
                       {text}
                       <br />
-                      <br />
                     </>
                   ))}
             </p>
           </div>
 
-          <div>
+          <div className="mt-[32px]">
             <h2 className="text-[18px] mb-[16px] leading-[24px] font-[600]">
               Sources
             </h2>
-            <div className="grid grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 gap-6">
               {specificReportDetailsData?.results?.sources &&
-              JSON?.parse(specificReportDetailsData?.results?.sources)?.length >
+              JSON.parse(specificReportDetailsData?.results?.sources)?.length >
                 0 ? (
                 specificReportDetailsData?.results?.sources &&
                 JSON?.parse(specificReportDetailsData?.results?.sources)?.map(
                   (source, index) => {
                     return (source?.title || source?.Title) &&
                       (source?.description || source?.Description) ? (
-                      <div className="group bg-[#F3F5F7] p-3 rounded-md mb-5">
-                        <p className="text-reportGrey  line-clamp-1 group-hover:line-clamp-none text-[1em] text-base font-md">
+                      <div className="group bg-[#F3F5F7] p-3 rounded-md">
+                        <p className="text-reportGrey text-[1em] text-base font-medium">
                           #{index + 1} {source?.title || source?.Title}
                         </p>
-                        <p className="line-clamp-2 group-hover:line-clamp-none text-blackText mt-[8px] text-[1em] text-base  font-md ">
+                        <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
                           {source?.description || source?.Description}
                         </p>
                       </div>
@@ -350,7 +368,7 @@ const SpecificReport = () => {
                   }
                 )
               ) : (
-                <p className="text-blackText mt-[8px] text-[1em] text-base  font-md">
+                <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium">
                   No data found
                 </p>
               )}
@@ -359,7 +377,7 @@ const SpecificReport = () => {
         </div>
         <div>
           <div className="card_shadow rounded-2xl flex basis-4/12 flex-col gap-1 py-4 px-3">
-            <h5 className="font-medium text-blackText">Report</h5>
+            <h5 className="text-[18px] leading-[24px] font-[600]">Report</h5>
             <div className="overflow-hidden w-full px-2 flex justify-center items-center ">
               <CustomGaugeChart
                 percentage={
@@ -374,11 +392,11 @@ const SpecificReport = () => {
               />
             </div>
             {/* Cols */}
-            <div className="mt-[16px] grid grid-cols-2 max-w-[370px] gap-2 my-3 ">
-              <p className="text-reportGrey   text-[1em] text-base mb-1 font-md">
+            <div className="mt-[16px] grid grid-cols-2 lg:max-w-[370px]  gap-2 my-3 ">
+              <p className="text-reportGrey   text-[1em] text-base mb-1 font-medium">
                 Reporting risk
               </p>
-              <div className="flex flex-row ml-4 items-center gap-[4px] flex-nowrap">
+              <div className="flex flex-row items-center gap-[4px] flex-nowrap">
                 {Array.from({ length: 10 }).map((_item, index) => {
                   return (
                     <div
@@ -394,26 +412,26 @@ const SpecificReport = () => {
                     ></div>
                   );
                 })}
-                <p className="text-blackText ml-[8px] text-[1em] text-base font-md">
+                <p className="text-darkBlack ml-[8px] text-[1em] text-base font-medium">
                   {parseInt(
                     specificReportDetailsData?.results?.reportingRiskPercentage
                   )}
                   %
                 </p>
               </div>
-              <p className="text-reportGrey  text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
                 GHG emissions
               </p>
-              <p className="text-blackText ml-4 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack text-[1em] text-base mb-1 font-medium">
                 {specificReportDetailsData?.results?.GHGEmissions}
               </p>
               {specificReportDetailsData?.results?.IPFSHash && (
-                <p className="text-reportGrey  text-[1em] text-base mb-1 font-md">
+                <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
                   Timestamp
                 </p>
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
-                <p className="col-span-1 ml-4 text-[1em] text-base mb-1 font-md">
+                <p className="col-span-1 text-[1em] text-base mb-1 font-medium">
                   {specificReportDetailsLoading
                     ? "Loading..."
                     : specificReportDetailsData?.results
@@ -422,23 +440,23 @@ const SpecificReport = () => {
               )}
               {/* Links */}
               {specificReportDetailsData?.results?.IPFSHash && (
-                <p className="text-reportGrey  text-[1em] text-base mb-1 font-md">
-                  IPFS link
+                <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
+             DeShare Link
                 </p>
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <a
-                  href={`https://ipfs.io/ipfs/${specificReportDetailsData?.results?.IPFSHash}`}
+                  href={`${specificReportDetailsData?.results?.IPFSHash}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-darkGreen col-span-1 truncate ml-4 text-[1em]  mb-1 font-md"
+                  className="text-darkGreen col-span-1 truncate text-[1em]  mb-1 font-medium"
                 >
                   {specificReportDetailsData?.results?.IPFSHash}
                 </a>
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
-                <p className="text-reportGrey  text-[1em] text-base mb-1 font-md">
-                  Etherscan URL
+                <p className="text-reportGrey  text-[1em] text-base mb-1 font-medium">
+                  Subscan link
                 </p>
               )}
               {specificReportDetailsData?.results?.etherscanURL && (
@@ -446,7 +464,7 @@ const SpecificReport = () => {
                   href={specificReportDetailsData?.results?.etherscanURL}
                   target="_blank"
                   rel="noreferrer"
-                  className="text-darkGreen truncate ml-4 text-[1em] text-base mb-1 font-md"
+                  className="text-darkGreen truncate text-[1em] text-base mb-1 font-medium"
                 >
                   {specificReportDetailsData?.results?.etherscanURL}
                 </a>
@@ -459,14 +477,14 @@ const SpecificReport = () => {
               Case Information
             </h2>
             <div className="mt-[16px] grid grid-cols-2 max-w-[370px] gap-2 gap-y-4 my-3 ">
-              <p className="text-reportGrey text-[1em] text-base mb-1 font-md">
+              <p className="text-reportGrey text-[1em] text-base mb-1 font-medium">
                 Case status
               </p>
-              <p className="text-blackText ml-1 text-[1em] text-base mb-1 font-md">
+              <p className="text-darkBlack text-[1em] text-base mb-1 font-medium">
                 <span
                   className={`py-1 px-3 text-white rounded-3xl ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
+                    specificReportDetailsData?.results?.pending === "true" &&
+                    specificReportDetailsData?.results?.disregard === "false"
                       ? "bg-foggyGrey"
                       : specificReportDetailsData?.results?.reviewing === "true"
                       ? "bg-review"
@@ -475,58 +493,55 @@ const SpecificReport = () => {
                       : "bg-danger"
                   }`}
                 >
-                  {console.log(
-                    typeof specificReportDetailsData?.results?.sentToRegulators
-                  )}
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
+                  {specificReportDetailsData?.results?.pending === "true" &&
+                  specificReportDetailsData?.results?.disregard === "false"
                     ? "Pending Review"
                     : specificReportDetailsData?.results?.reviewing === "true"
                     ? "In review"
                     : specificReportDetailsData?.results?.reviewed === "true"
-                    ? "closed"
+                    ? "Closed"
                     : specificReportDetailsData?.results?.disregard === "true"
-                    ? "disregarded"
+                    ? "Disregard"
                     : ""}
                 </span>
               </p>
               {specificReportDetailsData?.results?.caseOpenedTimeStamp && (
                 <div className="col-span-2">
                   <div className="mt-[16px] grid grid-cols-5 max-w-[370px] gap-2 my-3 ">
-                    <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+                    <p className="text-reportGrey  col-span-2 text-[1em] text-base mb-1 font-medium">
                       Case Opened
                     </p>
-                    <p className="col-span-1 ml-4 col-span-3 text-[1em] text-base mb-1 font-md">
+                    <p className="col-span-1 col-span-3 ml-4 text-[1em] text-base mb-1 font-medium">
                       John Doe (case file officer)
                     </p>
-                    <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+                    <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                       Timestamp
                     </p>
-                    <p className="col-span-1 ml-4 col-span-3 text-[1em] text-base mb-1 font-md">
+                    <p className="col-span-1 col-span-3 ml-4  text-[1em] text-base mb-1 font-medium">
                       {specificReportDetailsLoading
                         ? "Loading..."
                         : specificReportDetailsData?.results
                             ?.caseOpenedTimeStamp}
                     </p>
                     {specificReportDetailsData?.results?.assignedTo && (
-                      <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+                      <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                         Assigned to
                       </p>
                     )}
                     {specificReportDetailsData?.results?.assignedTo && (
-                      <p className="col-span-1 ml-4 col-span-3 text-[1em] text-base mb-1 font-md">
+                      <p className="col-span-1 col-span-3 ml-4  text-[1em] text-base mb-1 font-medium">
                         {specificReportDetailsLoading
                           ? "Loading..."
                           : specificReportDetailsData?.results?.assignedTo}
                       </p>
                     )}
                     {specificReportDetailsData?.results?.comment && (
-                      <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-md">
+                      <p className="text-reportGrey col-span-2 text-[1em] text-base mb-1 font-medium">
                         Comment
                       </p>
                     )}
                     {specificReportDetailsData?.results?.comment && (
-                      <p className="col-span-1 ml-4 col-span-3 text-[1em] text-base mb-1 font-md">
+                      <p className="col-span-1 col-span-3 ml-4  text-[1em] text-base mb-1 font-medium">
                         {specificReportDetailsLoading
                           ? "Loading..."
                           : specificReportDetailsData?.results?.comment}
@@ -565,82 +580,86 @@ const SpecificReport = () => {
                   )}
                 </div>
               )}
-              {!isEditing && (
-                <button
-                  onClick={() => {
-                    // open case
-                    if (
-                      specificReportDetailsData?.results?.sentToRegulators ===
-                      "true"
-                    ) {
-                      handleChangeStatusCase();
-                    } else {
-                      handleCloseCase();
-                    }
-                  }}
-                  className={`bg-darkGreen rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
-                >
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
-                    ? "Open Case"
-                    : "Close Case"}
-                </button>
-              )}
-              {isEditing && (
-                <button
-                  onClick={() => {
-                    handleAssignCase();
-                  }}
-                  className={`bg-blackText rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
-                >
-                  Save
-                </button>
-              )}
-              {!isEditing && (
-                <button
-                  onClick={() => {
-                    if (
-                      specificReportDetailsData?.results?.sentToRegulators ===
-                        "false" &&
-                      specificReportDetailsData?.results?.reviewing === "true"
-                    ) {
-                      setisEditing(true);
-                    }
-                  }}
-                  className={`bg-white border ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
-                      ? "border-danger"
-                      : "border-blackText"
-                  } rounded-lg  py-2 px-2 ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
-                      ? "text-danger"
-                      : "text-blackText"
-                  } text-[16px]`}
-                >
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
-                    ? "Disregard Case"
-                    : "Add Update"}
-                </button>
-              )}
-              {isEditing && (
-                <button
-                  onClick={() => {
-                    setisEditing(false);
-                  }}
-                  className={`bg-white border border-blackText
-                   rounded-lg  py-2 px-2 text-blackText
+              {specificReportDetailsData?.results?.reviewed === "false" &&
+                specificReportDetailsData?.results?.disregard === "false" && (
+                  <>
+                    {!isEditing && (
+                      <button
+                        onClick={() => {
+                          // open case
+                          if (
+                            specificReportDetailsData?.results?.pending ===
+                            "true"
+                          ) {
+                            handleChangeStatusCase();
+                          } else {
+                            handleCloseCase();
+                          }
+                        }}
+                        className={`bg-darkGreen rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
+                      >
+                        {specificReportDetailsData?.results?.pending === "true"
+                          ? "Open Case"
+                          : "Close Case"}
+                      </button>
+                    )}
+                    {isEditing && (
+                      <button
+                        onClick={() => {
+                          handleAssignCase();
+                        }}
+                        className={`bg-darkBlack rounded-lg  py-2 px-2 border-none outline-none text-[#fff] text-[16px]`}
+                      >
+                        Save
+                      </button>
+                    )}
+                    {!isEditing && (
+                      <button
+                        onClick={() => {
+                          if (
+                            specificReportDetailsData?.results?.pending ===
+                              "false" &&
+                            specificReportDetailsData?.results?.reviewing ===
+                              "true"
+                          ) {
+                            setisEditing(true);
+                          } else {
+                            handleDisregardCase();
+                          }
+                        }}
+                        className={`bg-white border ${
+                          specificReportDetailsData?.results?.pending === "true"
+                            ? "border-danger"
+                            : "border-darkBlack"
+                        } rounded-lg  py-2 px-2 ${
+                          specificReportDetailsData?.results?.pending === "true"
+                            ? "text-danger"
+                            : "text-darkBlack"
+                        } text-[16px]`}
+                      >
+                        {specificReportDetailsData?.results?.pending === "true"
+                          ? "Disregard Case"
+                          : "Add Update"}
+                      </button>
+                    )}
+                    {isEditing && (
+                      <button
+                        onClick={() => {
+                          setisEditing(false);
+                        }}
+                        className={`bg-white border border-darkBlack
+                   rounded-lg  py-2 px-2 text-darkBlack
                     text-[16px]`}
-                >
-                  Cancel
-                </button>
-              )}
+                      >
+                        Cancel
+                      </button>
+                    )}
+                  </>
+                )}
             </div>
           </div>
 
-          <div className="card_shadow mt-8 gap-4 rounded-2xl flex basis-4/12 flex-col z-50 p-[16px]">
+          {/* <div className="card_shadow mt-8 gap-4 rounded-2xl flex basis-4/12 flex-col z-50 p-[16px]">
             <h2 className="text-[18px] leading-[24px] font-[600]">Documents</h2>
             <div
               onClick={() => {
@@ -653,7 +672,7 @@ const SpecificReport = () => {
                 <span className="truncate">AIB_Group_PLC</span>.xlsx
               </h2>
             </div>
-          </div>
+          </div> */}
         </div>
       </div>
     </div>

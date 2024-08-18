@@ -4,7 +4,7 @@ const Header = () => {
   const { openLoginModal, setOpenLoginModal } = useStepsContext();
 
   return (
-    <div className="bg-black">
+    <div className="bg-darkBlack">
       <div className="flex justify-between items-center  py-5 w-[90%] mx-auto ">
         {/* Left */}
         <div className="flex justify-between gap-20 items-center">

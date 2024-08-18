@@ -1,16 +1,13 @@
 import React, { useState } from "react";
-// import { allReportsData } from "../../data";
 import { useStepsContext } from "../../Context/StateContext";
 import {
   useGetAllPendingReports,
   useGetAllReviewedReports,
   useGetAllUnderReviewReports,
 } from "../../Hooks/reports-hooks";
-import PriorityColor from "./PriorityColor";
 
 const AllReports = () => {
   const [activeTab, setActiveTab] = useState(1);
-  // const { setStep, rows } = useStepsContext();
 
   const { data: pendingReportsData, isLoading: pendingReportLoading } =
     useGetAllPendingReports();
@@ -28,11 +25,13 @@ const AllReports = () => {
   return (
     <div className="w-[90%] mx-auto my-10">
       {/* Top Container */}
-      <div className="flex justify-between items-start mb-6">
+      <div className="flex justify-between items-start mb-3">
         {/* Left */}
         <div>
-          <h1 className="text-[#000] font-bold text-3xl mb-1">Reports</h1>
-          <p className="text-[#0000007f] text-lg font-semibold mb-7">
+          <h1 className="text-darkBlack font-bold text-[40px] leading-[64px]">
+            Reports
+          </h1>
+          <p className="text-reportGrey text-lg font-karla font-normal mb-7 leading-[36px]">
             Overview all of the Greenwashing reports here
           </p>
         </div>
@@ -44,9 +43,9 @@ const AllReports = () => {
           onClick={() => handleTabClick(1)}
           className={`cursor-pointer ${
             activeTab === 1
-              ? "border-b-[2px] border-[#3FDD78] text-[#000] font-semibold"
-              : "text-[#5f6264]"
-          }  pb-1 `}
+              ? "border-b-[2px] border-[#3FDD78] text-[#181E2F] font-semibold"
+              : "text-reportGrey font-medium"
+          }  pb-1 text-[16px] leading-[24px]`}
         >
           Pending review
         </h1>
@@ -54,9 +53,9 @@ const AllReports = () => {
           onClick={() => handleTabClick(2)}
           className={`cursor-pointer ${
             activeTab === 2
-              ? "border-b-[2px] border-[#3FDD78] text-[#000] font-semibold"
-              : "text-[#5a5c5e]"
-          }  pb-1 `}
+              ? "border-b-[2px] border-[#3FDD78] text-[#181E2F] font-semibold"
+              : "text-reportGrey font-medium"
+          }  pb-1 text-[16px] leading-[24px]`}
         >
           Review in progress
         </h1>
@@ -65,9 +64,9 @@ const AllReports = () => {
           onClick={() => handleTabClick(3)}
           className={`cursor-pointer ${
             activeTab === 3
-              ? "border-b-[2px] border-[#3FDD78] text-[#000] font-semibold"
-              : "text-[#5a5c5e]"
-          }  pb-1 `}
+              ? "border-b-[2px] border-[#3FDD78] text-[#181E2F] font-semibold"
+              : "text-reportGrey font-medium"
+          }  pb-1 text-[16px] leading-[24px]`}
         >
           Review completed
         </h1>
@@ -118,69 +117,35 @@ const Report = ({ data, activeTab, loading }) => {
         ? data?.results.map((report, index) => (
             <div
               key={index}
-              // onClick={() => setStep("specific_report")}
               onClick={() => {
-                handleNavigate(report?.companyName, report._id);
+                handleNavigate(report?.companyName, report.id);
               }}
               style={{
                 boxShadow:
-                  " 0px 33px 32px -16px rgba(0, 0, 0, 0.10), 0px 0px 16px 4px rgba(0, 0, 0, 0.04)",
+                  " 0px 13px 12px -16px rgba(0, 0, 0, 0.05), 0px 0px 12px 0px rgba(0, 0, 0, 0.1)",
               }}
-              className="p-4 cursor-pointer rounded-xl hover:border-[1px] hover:border-black  "
+              className="p-4 cursor-pointer rounded-xl border border-borderLight hover:border-darkBlack"
             >
-              <p className="mb-2 text-sm text-[#6C7275]">
+              <p className="text-[#6C7275] text-[14px] mb-[4px] font-medium">
                 {loading
                   ? "loading..."
                   : report?.sendToRegulatorsTimeStamp &&
                     report?.sendToRegulatorsTimeStamp}
               </p>
-              <h1 className="mb-3 text-[#000] text-2xl font-semibold">
+              <h1 className="mb-3 text-darkBlack text-2xl font-semibold">
                 {loading ? "Loading..." : report?.companyName}
               </h1>
-              <p className="text-[#6C7275] mr-3 font-semibold">
+              <p className="text-[#6C7275] mt-[16px] text-[14px] mr-3 font-medium">
                 Jurisdiction :
-                <span className="text-[#000] font-semibold ml-2 text-sm ">
+                <span className="text-darkBlack font-semibold ml-2 text-sm ">
                   {loading
                     ? "loading..."
                     : report?.jurisdiction && report?.jurisdiction}
                 </span>
               </p>
-              {/* <p className="text-[#6C7275] mr-3 font-semibold">
-                Data sources :
-                <span className="text-[#000] font-semibold ml-2 text-sm">
-                  {loading
-                    ? "loading..."
-                    : report?.dataSources && report?.dataSources}
-                </span>
-              </p>
-
-              <div className="flex justify-start items-center ">
-                <p className="text-[#6C7275] mr-3 font-semibold">Age:</p>
-                <label
-                  htmlFor="freshness"
-                  className="ml-2 text-[#000] font-semibold text-sm"
-                >
-                  {report?.age}
-                </label>
-              </div>
-
-              <div className="flex justify-start items-center ">
-                <p className="text-[#6C7275] mr-3 font-semibold">Priority:</p>
-
-                <div className="flex justify-start items-center">
-                  <PriorityColor priority={report?.priority} />
-
-                  <label
-                    htmlFor="potentialgreenwashing"
-                    className="ml-2 text-[#000] font-semibold text-sm"
-                  >
-                    {report?.priority}
-                  </label>
-                </div>
-              </div> */}
             </div>
           ))
-        : data?.message && <p>{data?.message}</p>}
+        : data?.message && <p className="text-darkBlack">{data?.message}</p>}
     </>
   );
 };

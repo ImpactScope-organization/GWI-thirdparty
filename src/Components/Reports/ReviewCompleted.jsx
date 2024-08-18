@@ -223,7 +223,7 @@ const SpecificReport = () => {
                 ? "Loading..."
                 : specificReportDetailsData?.results?.sendToRegulatorsTimeStamp}
             </p>
-            <h1 className="leading-[64px] text-[#000] text-2xl font-bold">
+            <h1 className="leading-[64px] text-darkBlack text-2xl font-bold">
               {specificReportDetailsLoading
                 ? "Loading..."
                 : specificReportDetailsData?.results?.companyName}
@@ -428,7 +428,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <a
-                  href={`https://ipfs.io/ipfs/${specificReportDetailsData?.results?.IPFSHash}`}
+                  href={`${specificReportDetailsData?.results?.IPFSHash}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-darkGreen col-span-1 truncate ml-4 text-[1em]  mb-1 font-md"

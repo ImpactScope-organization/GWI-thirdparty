@@ -37,10 +37,8 @@ const SpecificReport = () => {
   } = useGetChangeStatusToReview(
     JSON.stringify({
       company,
-      pending: "true",
       reviewing: "true",
-      sentToRegulators: "false",
-      reviewed: "false",
+      // sentToRegulators: "false",
       caseOpenedTimeStamp: formattedDate,
     })
   );
@@ -73,7 +71,6 @@ const SpecificReport = () => {
   const { mutate: addMutate, isLoading } = useAssignCase(
     JSON.stringify({
       ...reportAssignCaseData,
-      pending: "false",
       caseAssignedTimeStamp: formattedDate,
       openedBy: "John Doe (case file officer)",
       company,
@@ -160,7 +157,7 @@ const SpecificReport = () => {
         company,
         reviewed: "true",
         reviewing: "false",
-        sentToRegulators: "false",
+        // sentToRegulators: "false",
       })
       // currentCountry
     );
@@ -223,7 +220,7 @@ const SpecificReport = () => {
                 ? "Loading..."
                 : specificReportDetailsData?.results?.sendToRegulatorsTimeStamp}
             </p>
-            <h1 className="leading-[64px] text-[#000] text-2xl font-bold">
+            <h1 className="leading-[64px] text-darkBlack text-2xl font-bold">
               {specificReportDetailsLoading
                 ? "Loading..."
                 : specificReportDetailsData?.results?.companyName}
@@ -428,7 +425,7 @@ const SpecificReport = () => {
               )}
               {specificReportDetailsData?.results?.IPFSHash && (
                 <a
-                  href={`https://ipfs.io/ipfs/${specificReportDetailsData?.results?.IPFSHash}`}
+                  href={`${specificReportDetailsData?.results?.IPFSHash}`}
                   target="_blank"
                   rel="noreferrer"
                   className="text-darkGreen col-span-1 truncate ml-4 text-[1em]  mb-1 font-md"
@@ -465,8 +462,7 @@ const SpecificReport = () => {
               <p className="text-blackText ml-1 text-[1em] text-base mb-1 font-md">
                 <span
                   className={`py-1 px-3 text-white rounded-3xl ${
-                    specificReportDetailsData?.results?.sentToRegulators ===
-                    "true"
+                    specificReportDetailsData?.results?.pending === "true"
                       ? "bg-foggyGrey"
                       : specificReportDetailsData?.results?.reviewing === "true"
                       ? "bg-review"
@@ -478,8 +474,7 @@ const SpecificReport = () => {
                   {console.log(
                     typeof specificReportDetailsData?.results?.sentToRegulators
                   )}
-                  {specificReportDetailsData?.results?.sentToRegulators ===
-                  "true"
+                  {specificReportDetailsData?.results?.pending === "true"
                     ? "Pending Review"
                     : specificReportDetailsData?.results?.reviewing === "true"
                     ? "In review"

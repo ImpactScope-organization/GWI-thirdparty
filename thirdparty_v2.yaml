@@ -1,0 +1,14 @@
+runtime: nodejs20
+service: thirdparty-v2
+handlers:
+  - url: /.*
+    secure: always
+    script: auto
+automatic_scaling:
+  target_cpu_utilization: 0.75
+  min_instances: 5
+  max_instances: 15
+instance_class: F4
+resources:
+  cpu: 2
+  memory_gb: 2
