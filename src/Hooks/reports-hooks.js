@@ -30,13 +30,6 @@ const useGetAllReviewedReports = () => {
   });
 };
 
-const useGetSingleReportDetails = (company) => {
-  return useQuery({
-    queryKey: ["getSingleReportDetail"],
-    queryFn: () => ReportService.getSingleReportDetail(company),
-  });
-};
-
 const useGetChangeStatusToReview = (company) => {
   // console.log(reportData)
   const queryClient = useQueryClient();
@@ -82,7 +75,7 @@ const useAssignCase = (reportData) => {
   );
 };
 
-const useDisregardCase = (reportData) => {
+const useDisregardCase = () => {
   // console.log(reportData)
   const queryClient = useQueryClient();
   return useMutation(
@@ -97,21 +90,6 @@ const useDisregardCase = (reportData) => {
   );
 };
 
-const useUpdateCase = (reportData) => {
-  // console.log(reportData)
-  const queryClient = useQueryClient();
-  return useMutation(
-    () => {
-      return ReportService.updateCase(reportData);
-    },
-    {
-      onSuccess: () => {
-        queryClient.invalidateQueries("updateCase");
-      },
-    }
-  );
-};
-
 export {
   useGetSpecificReportDetails,
   useGetAllPendingReports,
@@ -120,7 +98,5 @@ export {
   useCloseCase,
   useGetChangeStatusToReview,
   useAssignCase,
-  useUpdateCase,
   useDisregardCase,
-  useGetSingleReportDetails,
 };

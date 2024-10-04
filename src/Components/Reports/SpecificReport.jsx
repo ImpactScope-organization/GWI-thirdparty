@@ -7,7 +7,6 @@ import {
   useAssignCase,
   useCloseCase,
   useGetChangeStatusToReview,
-  useUpdateCase,
   useGetSpecificReportDetails,
   useDisregardCase,
 } from "../../Hooks/reports-hooks";
@@ -26,7 +25,7 @@ const SpecificReport = () => {
     useState(false);
   const [showCaseStatusStep4Final, setShowCaseStatusStep4Final] =
     useState(false);
-  const { setStep, company, specificReportDetailsID } = useStepsContext();
+  const { setStep, specificReportDetailsID } = useStepsContext();
 
   const callAPIAgain = () => {
     queryClient.invalidateQueries("getSingleReportDetail");
@@ -37,7 +36,7 @@ const SpecificReport = () => {
     isLoading: changeStatusLoading,
   } = useGetChangeStatusToReview(
     JSON.stringify({
-      company,
+      id: specificReportDetailsID,
       pending: "false",
       reviewing: "true",
       // sentToRegulators: "false",
@@ -77,7 +76,7 @@ const SpecificReport = () => {
       pending: "false",
       caseAssignedTimeStamp: formattedDate,
       openedBy: "John Doe (case file officer)",
-      company,
+      id: specificReportDetailsID,
     })
     // currentCountry
   );
@@ -140,50 +139,11 @@ const SpecificReport = () => {
     );
   };
 
-  // updateCase
-
-  const [updateReportComment, setUpdateReportComment] = useState("");
-
-  const { mutate: addMutateUpdateCase, isLoading: updateCaseLoading } =
-    useUpdateCase(
-      JSON.stringify({
-        ...updateReportComment,
-        caseUpdateTimeStamp: formattedDate,
-        company,
-      })
-      // currentCountry
-    );
-
-  const handleUpdateCase = async () => {
-    if (!updateReportComment) {
-      toast.error("Please enter the field");
-      return;
-    }
-
-    addMutateUpdateCase(
-      {},
-      {
-        onSuccess: (response) => {
-          if (response?.data?.message) {
-            toast.error(response?.data?.message);
-          }
-          if (response?.data?.results) {
-            toast.success("Comment has been updated");
-            setShowCaseStatusStep1(false);
-            setShowCaseStatusStep3Update(false);
-            setShowCaseStatusStep4Final(true);
-            //  setShowCaseStatusStep2(true);
-          }
-        },
-      }
-    );
-  };
-
   // useCloseCase;
   const { mutate: addMutateCloseCase, isLoading: closeCaseLoading } =
     useCloseCase(
       JSON.stringify({
-        company,
+        id: specificReportDetailsID,
         reviewed: "true",
         reviewing: "false",
         // sentToRegulators: "false",
@@ -214,12 +174,6 @@ const SpecificReport = () => {
     data: specificReportDetailsData,
     isLoading: specificReportDetailsLoading,
   } = useGetSpecificReportDetails(specificReportDetailsID);
-
-  const allClaim = specificReportDetailsData?.results?.claims
-    ? JSON.parse(specificReportDetailsData?.results?.claims)
-    : null;
-
-  console.log("allClaim: ", allClaim);
 
   return (
     <div>

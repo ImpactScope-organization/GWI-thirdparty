@@ -110,20 +110,6 @@ class ReportService {
   }
 
   /**
-   * updateCase
-   * @returns
-   */
-  async updateCase(reportData) {
-    // console.log("Hello");
-    const res = await axios.put(`${apiUrl}/api/report/updateCase`, reportData, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    return res;
-  }
-
-  /**
    * getSingleReportDetail
    * @returns
    */
