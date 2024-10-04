@@ -38,6 +38,7 @@ const SpecificReport = () => {
   } = useGetChangeStatusToReview(
     JSON.stringify({
       company,
+      id: specificReportDetailsID,
       pending: "false",
       reviewing: "true",
       // sentToRegulators: "false",
@@ -214,12 +215,6 @@ const SpecificReport = () => {
     data: specificReportDetailsData,
     isLoading: specificReportDetailsLoading,
   } = useGetSpecificReportDetails(specificReportDetailsID);
-
-  const allClaim = specificReportDetailsData?.results?.claims
-    ? JSON.parse(specificReportDetailsData?.results?.claims)
-    : null;
-
-  console.log("allClaim: ", allClaim);
 
   return (
     <div>
