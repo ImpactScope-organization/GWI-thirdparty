@@ -7,7 +7,6 @@ import {
   useAssignCase,
   useCloseCase,
   useGetChangeStatusToReview,
-  useUpdateCase,
   useGetSpecificReportDetails,
   useDisregardCase,
 } from "../../Hooks/reports-hooks";
@@ -135,45 +134,6 @@ const SpecificReport = () => {
           if (response?.data?.results) {
             toast.success("Case has been disregarded");
             callAPIAgain();
-          }
-        },
-      }
-    );
-  };
-
-  // updateCase
-
-  const [updateReportComment, setUpdateReportComment] = useState("");
-
-  const { mutate: addMutateUpdateCase, isLoading: updateCaseLoading } =
-    useUpdateCase(
-      JSON.stringify({
-        ...updateReportComment,
-        caseUpdateTimeStamp: formattedDate,
-        company,
-      })
-      // currentCountry
-    );
-
-  const handleUpdateCase = async () => {
-    if (!updateReportComment) {
-      toast.error("Please enter the field");
-      return;
-    }
-
-    addMutateUpdateCase(
-      {},
-      {
-        onSuccess: (response) => {
-          if (response?.data?.message) {
-            toast.error(response?.data?.message);
-          }
-          if (response?.data?.results) {
-            toast.success("Comment has been updated");
-            setShowCaseStatusStep1(false);
-            setShowCaseStatusStep3Update(false);
-            setShowCaseStatusStep4Final(true);
-            //  setShowCaseStatusStep2(true);
           }
         },
       }
