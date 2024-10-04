@@ -25,7 +25,7 @@ const SpecificReport = () => {
     useState(false);
   const [showCaseStatusStep4Final, setShowCaseStatusStep4Final] =
     useState(false);
-  const { setStep, company, specificReportDetailsID } = useStepsContext();
+  const { setStep, specificReportDetailsID } = useStepsContext();
 
   const callAPIAgain = () => {
     queryClient.invalidateQueries("getSingleReportDetail");
@@ -36,7 +36,6 @@ const SpecificReport = () => {
     isLoading: changeStatusLoading,
   } = useGetChangeStatusToReview(
     JSON.stringify({
-      company,
       id: specificReportDetailsID,
       pending: "false",
       reviewing: "true",
