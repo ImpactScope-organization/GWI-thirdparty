@@ -30,13 +30,6 @@ const useGetAllReviewedReports = () => {
   });
 };
 
-const useGetSingleReportDetails = (company) => {
-  return useQuery({
-    queryKey: ["getSingleReportDetail"],
-    queryFn: () => ReportService.getSingleReportDetail(company),
-  });
-};
-
 const useGetChangeStatusToReview = (company) => {
   // console.log(reportData)
   const queryClient = useQueryClient();
@@ -82,7 +75,7 @@ const useAssignCase = (reportData) => {
   );
 };
 
-const useDisregardCase = (reportData) => {
+const useDisregardCase = () => {
   // console.log(reportData)
   const queryClient = useQueryClient();
   return useMutation(
@@ -122,5 +115,4 @@ export {
   useAssignCase,
   useUpdateCase,
   useDisregardCase,
-  useGetSingleReportDetails,
 };
