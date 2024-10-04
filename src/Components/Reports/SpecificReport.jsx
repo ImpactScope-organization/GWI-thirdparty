@@ -78,7 +78,7 @@ const SpecificReport = () => {
       pending: "false",
       caseAssignedTimeStamp: formattedDate,
       openedBy: "John Doe (case file officer)",
-      company,
+      id: specificReportDetailsID,
     })
     // currentCountry
   );
@@ -184,7 +184,7 @@ const SpecificReport = () => {
   const { mutate: addMutateCloseCase, isLoading: closeCaseLoading } =
     useCloseCase(
       JSON.stringify({
-        company,
+        id: specificReportDetailsID,
         reviewed: "true",
         reviewing: "false",
         // sentToRegulators: "false",
