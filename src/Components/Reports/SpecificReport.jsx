@@ -244,55 +244,30 @@ const SpecificReport = () => {
             <p className="text-reportGrey text-[1em] text-base font-medium">
               Contradictions
             </p>
-            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium">
-              {specificReportDetailsData?.results?.contradiction &&
-                specificReportDetailsData?.results?.contradiction
-                  ?.split("\n")
-                  ?.filter((item) => item !== "\n")
-                  ?.map((text) => (
-                    <>
-                      {text}
-                      <br />
-                    </>
-                  ))}
-            </p>
+            <div
+              className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
+              dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.contradiction}}
+            />
           </div>
           {/*    Potential inconsistencies */}
           <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
             <p className="text-reportGrey text-[1em] text-base font-medium">
               Potential inconsistencies
             </p>
-            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
-              {specificReportDetailsData?.results?.potentialInconsistencies >
-                "" &&
-                specificReportDetailsData?.results?.potentialInconsistencies
-                  ?.split("\n")
-                  ?.filter((item) => item !== "\n")
-                  ?.map((text) => (
-                    <>
-                      {text}
-                      <br />
-                    </>
-                  ))}
-            </p>
+            <div
+              className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
+              dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.potentialInconsistencies}}
+            />
           </div>
           {/* Unsubstantiated claims */}
           <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
             <p className="text-reportGrey text-[1em] text-base font-medium">
               Unsubstantiated claims
             </p>
-            <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
-              {specificReportDetailsData?.results?.unsubstantiatedClaims &&
-                specificReportDetailsData?.results?.unsubstantiatedClaims
-                  ?.split("\n")
-                  ?.filter((item) => item !== "\n")
-                  ?.map((text) => (
-                    <>
-                      {text}
-                      <br />
-                    </>
-                  ))}
-            </p>
+            <div
+              className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
+              dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.unsubstantiatedClaims}}
+            />
           </div>
 
           <div className="mt-[32px]">
@@ -308,13 +283,14 @@ const SpecificReport = () => {
                   (source, index) => {
                     return (source?.title || source?.Title) &&
                       (source?.description || source?.Description) ? (
-                      <div className="group bg-[#F3F5F7] p-3 rounded-md">
+                      <div key={'source-description' + index} className="group bg-[#F3F5F7] p-3 rounded-md">
                         <p className="text-reportGrey text-[1em] text-base font-medium">
                           #{index + 1} {source?.title || source?.Title}
                         </p>
-                        <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium ">
-                          {source?.description || source?.Description}
-                        </p>
+                        <div
+                          className="text-darkBlack mt-[8px] text-[1em] text-base font-medium green-links"
+                          dangerouslySetInnerHTML={{__html: source?.description || source?.Description}}
+                        />
                       </div>
                     ) : (
                       <></>
@@ -354,6 +330,7 @@ const SpecificReport = () => {
                 {Array.from({ length: 10 }).map((_item, index) => {
                   return (
                     <div
+                      key={'reportingRiskPercentage' + index}
                       className={`w-[4px] h-[14px] rounded-sm ${
                         (index + 1) * 10 <=
                         parseInt(
