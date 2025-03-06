@@ -249,16 +249,20 @@ const SpecificReport = () => {
               dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.contradiction}}
             />
           </div>
-          {/*    Potential inconsistencies */}
-          <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
-            <p className="text-reportGrey text-[1em] text-base font-medium">
-              Potential inconsistencies
-            </p>
-            <div
-              className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
-              dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.potentialInconsistencies}}
-            />
-          </div>
+          <>
+            {/*    Potential inconsistencies */}
+            {specificReportDetailsData?.results?.potentialInconsistencies && (
+              <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
+                <p className="text-reportGrey text-[1em] text-base font-medium">
+                  Potential inconsistencies
+                </p>
+                <div
+                  className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
+                  dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.potentialInconsistencies}}
+                />
+              </div>
+            )}
+          </>
           {/* Unsubstantiated claims */}
           <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
             <p className="text-reportGrey text-[1em] text-base font-medium">
@@ -270,40 +274,37 @@ const SpecificReport = () => {
             />
           </div>
 
-          <div className="mt-[32px]">
-            <h2 className="text-[18px] mb-[16px] leading-[24px] font-[600]">
-              Sources
-            </h2>
-            <div className="grid grid-cols-1 gap-6">
-              {specificReportDetailsData?.results?.sources &&
-              JSON.parse(specificReportDetailsData?.results?.sources)?.length >
-                0 ? (
-                specificReportDetailsData?.results?.sources &&
-                JSON?.parse(specificReportDetailsData?.results?.sources)?.map(
-                  (source, index) => {
-                    return (source?.title || source?.Title) &&
-                      (source?.description || source?.Description) ? (
-                      <div key={'source-description' + index} className="group bg-[#F3F5F7] p-3 rounded-md">
-                        <p className="text-reportGrey text-[1em] text-base font-medium">
-                          #{index + 1} {source?.title || source?.Title}
-                        </p>
-                        <div
-                          className="text-darkBlack mt-[8px] text-[1em] text-base font-medium green-links"
-                          dangerouslySetInnerHTML={{__html: source?.description || source?.Description}}
-                        />
-                      </div>
-                    ) : (
-                      <></>
-                    );
+          <>
+            {specificReportDetailsData?.results?.sources && (
+              <div className="mt-[32px]">
+                <h2 className="text-[18px] mb-[16px] leading-[24px] font-[600]">
+                  Sources
+                </h2>
+                <div className="grid grid-cols-1 gap-6">
+                  {
+                    JSON?.parse(specificReportDetailsData?.results?.sources)?.map(
+                      (source, index) => {
+                        return (source?.title || source?.Title) &&
+                          (source?.description || source?.Description) ? (
+                          <div key={'source-description' + index} className="group bg-[#F3F5F7] p-3 rounded-md">
+                            <p className="text-reportGrey text-[1em] text-base font-medium">
+                              #{index + 1} {source?.title || source?.Title}
+                            </p>
+                            <div
+                              className="text-darkBlack mt-[8px] text-[1em] text-base font-medium green-links"
+                              dangerouslySetInnerHTML={{__html: source?.description || source?.Description}}
+                            />
+                          </div>
+                        ) : (
+                          <></>
+                        );
+                      }
+                    )
                   }
-                )
-              ) : (
-                <p className="text-darkBlack mt-[8px] text-[1em] text-base  font-medium">
-                  No data found
-                </p>
-              )}
-            </div>
-          </div>
+                </div>
+              </div>
+            )}
+          </>
         </div>
         <div>
           <div className="card_shadow rounded-2xl flex basis-4/12 flex-col gap-1 py-4 px-3">
