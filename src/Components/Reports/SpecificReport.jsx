@@ -249,16 +249,20 @@ const SpecificReport = () => {
               dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.contradiction}}
             />
           </div>
-          {/*    Potential inconsistencies */}
-          <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
-            <p className="text-reportGrey text-[1em] text-base font-medium">
-              Potential inconsistencies
-            </p>
-            <div
-              className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
-              dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.potentialInconsistencies}}
-            />
-          </div>
+          <>
+            {/*    Potential inconsistencies */}
+            {specificReportDetailsData?.results?.potentialInconsistencies && (
+              <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
+                <p className="text-reportGrey text-[1em] text-base font-medium">
+                  Potential inconsistencies
+                </p>
+                <div
+                  className="text-darkBlack mt-[8px] text-[1em] text-base green-links font-medium whitespace-pre-line"
+                  dangerouslySetInnerHTML={{__html: specificReportDetailsData?.results?.potentialInconsistencies}}
+                />
+              </div>
+            )}
+          </>
           {/* Unsubstantiated claims */}
           <div className="bg-[#F3F5F7] p-3 rounded-md mb-[16px]">
             <p className="text-reportGrey text-[1em] text-base font-medium">
